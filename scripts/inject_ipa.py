@@ -148,6 +148,14 @@ def main():
         if bundle_id != "com.burbn.barcelona":
             print(f"::warning::這個 IPA 的 Bundle ID 是 {bundle_id}，不是 Threads（com.burbn.barcelona）")
         print(f"Threads {threads_version}（{bundle_id}）")
+        if args.no_plugins:
+            new_id = "com.personal.threadspulse.secondary"
+            info["CFBundleIdentifier"] = new_id
+            info["CFBundleDisplayName"] = "Threads Pulse"
+            with open(os.path.join(app, "Info.plist"), "wb") as f:
+                plistlib.dump(info, f)
+            print(f"雙 App 模式: {new_id}")
+
 
         # 1) 放入 dylib 與語系 bundle
         frameworks = os.path.join(app, "Frameworks")
